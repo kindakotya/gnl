@@ -1,9 +1,19 @@
 #include "get_next_line.h"
+#include <stdio.h>
+#include <fcntl.h>
+
 int main()
 {
-	char **line;
-	line = malloc(sizeof(char*));
-	line[0] = malloc(sizeof(char));
-	get_next_line(0, line);
+	int fd = open("meow", O_RDONLY);
+	char *line;
+	int i;
+
+	while (i = get_next_line(fd, &line))
+	{
+		printf("i = %d %s\n", i, line);
+		free(line);
+	}
+	printf("i = %d %s\n", i, line);
+	free(line);
 	return (0);
 }
