@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gmayweat <gmayweat@42.fr>                  +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/12/02 12:32:44 by gmayweat          #+#    #+#              #
+#    Updated: 2020/12/02 13:57:45 by gmayweat         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = get_next_line
 
 SRCS = 	$(NAME).c $(NAME)_utils.c	main.c
@@ -11,10 +23,10 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		gcc -g -Wall -Wextra -Werror $(OBJS) -o $(NAME)
+		clang -g -Wall -Wextra -Werror $(OBJS) -o $(NAME)
 
 %.o: %.c
-		gcc -g -Wall -Wextra -Werror -D BUFFER_SIZE=50 -c $<
+		clang -g -Wall -Wextra -Werror -D BUFFER_SIZE=50 -c $<
 
 clean:
 		rm -rf $(OBJS)
