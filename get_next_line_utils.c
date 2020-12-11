@@ -6,7 +6,7 @@
 /*   By: gmayweat <gmayweat@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:10:13 by gmayweat          #+#    #+#             */
-/*   Updated: 2020/12/02 15:40:30 by gmayweat         ###   ########.fr       */
+/*   Updated: 2020/12/11 22:36:47 by gmayweat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_strdup(const char *s)
 	char	*dup;
 	int		i;
 
-	dup = (s[0] != '\0') ? malloc(ft_strlen(s) + 1 * sizeof(char)) :
+	dup = (s[0] != '\0') ? malloc((ft_strlen(s) + 1) * sizeof(char)) :
 	malloc(sizeof(char));
 	if (dup == NULL)
 		return (NULL);
