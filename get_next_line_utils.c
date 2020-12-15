@@ -6,7 +6,7 @@
 /*   By: gmayweat <gmayweat@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:10:13 by gmayweat          #+#    #+#             */
-/*   Updated: 2020/12/11 22:36:47 by gmayweat         ###   ########.fr       */
+/*   Updated: 2020/12/15 17:52:11 by gmayweat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,46 +24,29 @@ size_t	ft_strlen(const char *str)
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char	*ss;
-	int		ss_len;
+	char		*ss;
+	size_t	ss_len;
 
 	if (!s1 || !s2)
 		return (NULL);
 	ss_len = ft_strlen(s1) + ft_strlen(s2);
-	ss = (char *)malloc((ss_len + 1) * sizeof(char));
+	ss = (char *)ft_calloc((ss_len + 1), sizeof(char));
 	if (!ss)
 		return (NULL);
 	while (*s1 != '\0')
 		*ss++ = *s1++;
 	while (*s2 != '\0')
 		*ss++ = *s2++;
-	*ss++ = '\0';
-	return ((char*)(ss - ss_len - 1));
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	int i;
-
-	i = 0;
-	if (c == '\0')
-		return (&(((char*)s)[ft_strlen(s)]));
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (&(((char*)s)[i]));
-		++i;
-	}
-	return (NULL);
+	return ((char*)(ss - ss_len));
 }
 
 char	*ft_strdup(const char *s)
 {
-	char	*dup;
-	int		i;
+	char		*dup;
+	size_t	i;
 
-	dup = (s[0] != '\0') ? malloc((ft_strlen(s) + 1) * sizeof(char)) :
-	malloc(sizeof(char));
+	dup = (s[0] != '\0') ? ft_calloc((ft_strlen(s) + 1), sizeof(char)) :
+	ft_calloc(1, sizeof(char));
 	if (dup == NULL)
 		return (NULL);
 	i = 0;
@@ -72,6 +55,28 @@ char	*ft_strdup(const char *s)
 		dup[i] = s[i];
 		++i;
 	}
-	dup[i] = '\0';
 	return (dup);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	size_t 	i;
+	void		*mem;
+
+	i = 0;
+	mem = malloc(nmemb * size);
+	if (mem == NULL)
+		return (NULL);
+	while (i < nmemb * size)
+		((unsigned char *)mem)[i++] = '\0';
+	return (mem);
+}
+
+void	ft_strnl(char **s)
+{
+	size_t i;
+
+	i = 0;
+	while ((*s)[i])
+		(*s)[i++] = '\0';
 }

@@ -6,7 +6,7 @@
 #    By: gmayweat <gmayweat@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/02 12:32:44 by gmayweat          #+#    #+#              #
-#    Updated: 2020/12/02 13:57:45 by gmayweat         ###   ########.fr        #
+#    Updated: 2020/12/15 17:02:58 by gmayweat         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 		clang -g -Wall -Wextra -Werror $(OBJS) -o $(NAME)
 
-%.o: %.c
-		clang -g -Wall -Wextra -Werror -D BUFFER_SIZE=50 -c $<
+%.o: %.c $(HEAD)
+		clang -g -Wall -Wextra -Werror -D BUFFER_SIZE=10 -c $<
 
 clean:
 		rm -rf $(OBJS)
