@@ -6,7 +6,7 @@
 #    By: gmayweat <gmayweat@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/02 12:32:44 by gmayweat          #+#    #+#              #
-#    Updated: 2020/12/16 22:18:58 by gmayweat         ###   ########.fr        #
+#    Updated: 2020/12/29 11:33:14 by gmayweat         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,22 +16,31 @@ SRCS = 	$(NAME).c $(NAME)_utils.c	main.c
 
 HEAD = $(NAME).h
 
+vpath %.o objs
+
 OBJS = $(SRCS:.c=.o)
 
-.Phony: all $(NAME) clean re fclean .o.c
+OBJSPATH = $(addprefix objs/, $(OBJS))
+
+OBJSDIR = objs
+
+.Phony: all $(NAME) clean re fclean
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-		clang -g -Wall -Wextra -Werror $(OBJS) -o $(NAME)
+$(NAME): $(OBJSDIR) $(OBJS)
+	clang -g -Wall -Wextra -Werror $(OBJSPATH) -o $(NAME)
 
 %.o: %.c $(HEAD)
-		clang -g -Wall -Wextra -Werror -D BUFFER_SIZE=10 -c $<
+	clang -g -Wall -Wextra -Werror -D BUFFER_SIZE=99999 -o $(addprefix objs/, $(patsubst %.c, %.o, $<)) -c $<
+
+$(OBJSDIR):
+	mkdir objs
 
 clean:
-		rm -rf $(OBJS)
+	rm -rf objs
 
 fclean: clean
-		rm -rf $(NAME)
+	rm -rf $(NAME)
 
-re: fclean all
+re: fclean $(CREAT_OBJSDIR) all
