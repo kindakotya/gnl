@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmayweat <gmayweat@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:08:48 by gmayweat          #+#    #+#             */
-/*   Updated: 2021/01/20 14:44:43 by gmayweat         ###   ########.fr       */
+/*   Updated: 2021/01/20 15:21:57 by gmayweat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static int		ft_findn(char *s)
 {
@@ -94,26 +94,26 @@ static size_t	fill_line(char *storage, char **line)
 int				get_next_line(int fd, char **line)
 {
 	ssize_t			n;
-	static char		*storage = NULL;
+	static char		*storage[4096];
 	char			buf[BUFFER_SIZE + 1];
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || !line)
 		return (-1);
 	n = 0;
-	while (!ft_findn(storage))
+	while (!ft_findn(storage[fd]))
 	{
 		ft_strnl(buf);
 		n = read(fd, buf, BUFFER_SIZE);
 		if (!n)
 			break ;
 		if (n < 0)
-			return (ft_free(&storage, -1));
-		storage = fill_storage(buf, storage, 0);
+			return (ft_free(&storage[fd], -1));
+		storage[fd] = fill_storage(buf, storage[fd], 0);
 	}
-	if (!storage && !n)
+	if (!storage[fd] && !n)
 		return (fill_line(0, line));
-	if (!storage[fill_line(storage, line)] && !n)
-		return (ft_free(&storage, 0));
-	storage = fill_storage(0, storage, 1);
+	if (!storage[fd][fill_line(storage[fd], line)] && !n)
+		return (ft_free(&(storage[fd]), 0));
+	storage[fd] = fill_storage(0, storage[fd], 1);
 	return (1);
 }
